@@ -3,7 +3,7 @@ from tkinter import ttk
 import requests
 
 url= "https://api.openweathermap.org/data/2.5/weather?"
-API_key= "f52bd063f030cbc48b5a613985f2b021"
+API_key= "your_api_key_here"
 
 def getWeather(city):
     full_url=url+ "q=" + city + "&appid=" + API_key + "&units=metric"
@@ -15,15 +15,15 @@ def getWeather(city):
         current_teperature= main_data['temp']
         weather= data['weather']
         weather_description=weather[0]['description']
+        country= data['sys']['country']
         
-        return round(current_teperature),weather_description
+        return round(current_teperature),weather_description, country
        
     else:
         return None, None
 
 
-   
-    
+ 
 
 root = tk.Tk()
 titltle=root.title('Weather app')
@@ -50,10 +50,10 @@ city_entry.place(x=250, y=250)
 
 def get_entry_value():
     city= city_entry.get()
-    temperature, weather_description = getWeather(city)
+    temperature, weather_description, country = getWeather(city)
     if temperature is not None:
         
-         info_label.config(text=f"The weather in {city} is {temperature}°C with {weather_description}")
+         info_label.config(text=f"The weather in {city}, {country} is {temperature}°C with {weather_description}")
     else:
         
          info_label.config(text="City Not Found")
@@ -67,9 +67,4 @@ info_label.place(x=200, y=400)
 
 
 
-
-
 root.mainloop()
-
-
-
